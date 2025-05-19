@@ -1,0 +1,41 @@
+name: "Dependabot PR Security Compliance"
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+
+jobs:
+  security_compliance:
+    if: github.actor == 'dependabot[bot]'  # Only for Dependabot PRs
+    runs-on: ubuntu-latest
+    name: Run security checks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # or your project's version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run vulnerability scan
+        run: |
+          npm audit --audit-level=high
+        continue-on-error: false
+
+      - name: Check license compliance
+        run: |
+          npx license-checker --onlyAllow "MIT;Apache-2.0"
+        continue-on-error: false
+
+      # Optional: Generate SBOM
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          format: cyclonedx-json
+          output-file: sbom.json
