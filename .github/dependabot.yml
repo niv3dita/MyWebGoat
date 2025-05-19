@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "maven" # change to pip, maven, etc. as per your stack
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
+      - "security"
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: "-"
