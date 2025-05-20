@@ -26,7 +26,7 @@ jobs:
         run: echo "JAVA_HOME=${{ steps.setup-java.outputs.path }}" >> $GITHUB_ENV
 
       - name: Run OWASP Dependency Check
-        uses: dependency-check/Dependency-Check_Action@v1.0.0
+        uses: dependency-check/Dependency-Check_Action@v2.1.2
         with:
           project: "Maven Security Audit"
           path: "../../"
