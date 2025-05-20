@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize]
     branches: [main]
   workflow_dispatch: #Add this manual dispatch
-    
+
 jobs:
   security_compliance:
     if: github.actor == 'dependabot[bot]'
